@@ -1,0 +1,21 @@
+server:
+  port: 5679
+
+sidecar:
+  port: 9010
+  health-uri: http://localhost:8090/app/health
+  hostname: localhost
+spring:
+  application:
+    name: content-service
+  cloud:
+    circuitbreaker:
+      hystrix:
+        enabled: true
+eureka:
+  client:
+    prefer-same-zone-eureka: true
+  instance:
+    metadata-map:
+      zone: zone1
+

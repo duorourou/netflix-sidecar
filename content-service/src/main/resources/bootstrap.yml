@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: content-service
+management:
+  endpoints:
+    web:
+      base-path: /app
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        ringBufferSizeInClosedState: 1
+        ringBufferSizeInHalfOpenState: 2
+        waitInterval: 1000
+        failureRateThreshold: 55
+        eventConsumerBufferSize: 5
+        registerHealthIndicator: true
+    instances:
+      video-service:
+        baseConfig: default

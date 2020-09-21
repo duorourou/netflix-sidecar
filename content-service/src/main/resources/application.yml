@@ -1,0 +1,10 @@
+server:
+  port: 8090
+spring:
+  r2dbc:
+    url: r2dbc:postgresql://localhost:32224/operation?currentSchema=operation_activity
+    username: xadmin
+    password: xiaoc
+sidecar:
+  host: localhost
+  port: 5679
