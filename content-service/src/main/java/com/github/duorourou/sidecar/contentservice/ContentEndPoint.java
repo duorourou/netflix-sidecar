@@ -31,7 +31,7 @@ public class ContentEndPoint {
                 "안녕하십니까 World"
         )).zipWith(videoEndPoint.list(),
                 (hello, video) -> {
-                    return new ContentResponse(video.name(), video.author(), "VIDEO", hello);
+                    return new ContentResponse(video.getName(), video.getAuthor(), "VIDEO", hello);
                 }
         );
     }
