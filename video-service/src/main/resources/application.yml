@@ -3,3 +3,23 @@ server:
 spring:
   application:
     name: video-service
+  profiles:
+    active: zone-b
+sidecar:
+  host: localhost
+
+---
+spring:
+  profiles: zone-a
+server:
+  port: 9020
+sidecar:
+  port: 5688
+
+---
+spring:
+  profiles: zone-b
+server:
+  port: 9021
+sidecar:
+  port: 5689

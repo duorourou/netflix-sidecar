@@ -1,13 +1,47 @@
 server:
   port: 8761
-
 eureka:
+  instance:
+    prefer-ip-address: false
+    lease-expiration-duration-in-seconds: 10
+    lease-renewal-interval-in-seconds: 5
   client:
-    register-with-eureka: false
-    fetch-registry: false
-logging:
-  level:
-    com:
-      netflix:
-        eureka: OFF
-        discovery: OFF
+    register-with-eureka: true
+    fetch-registry: true
+    prefer-same-zone-eureka: true
+    service-url:
+      zoneA: http://127.0.0.1:8761/eureka
+      zoneB: http://127.0.0.1:8762/eureka
+    region: local-region
+  server:
+    enable-self-preservation: false
+    eviction-interval-timer-in-ms: 3000
+    use-read-only-response-cache: false
+spring:
+  profiles:
+    active: zone-a
+  application:
+    name: eureka
+
+---
+spring:
+  profiles: zone-a
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    availability-zones:
+      local-region: zoneA,zoneB
+server:
+  port: 8761
+---
+spring:
+  profiles: zone-b
+eureka:
+  instance:
+    hostname: 127.0.0.1
+  client:
+    availability-zones:
+      local-region: zoneB,zoneA
+server:
+  port: 8762

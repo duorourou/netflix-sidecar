@@ -1,0 +1,31 @@
+server:
+  port: 8090
+spring:
+  r2dbc:
+    url: r2dbc:postgresql://localhost:32224/operation?currentSchema=operation_activity
+    username: xadmin
+    password: xiaoc
+  profiles:
+    active: zone-b
+sidecar:
+  host: localhost
+  video-service:
+    path:/video-service
+
+---
+spring:
+  profiles: zone-a
+server:
+  port: 9010
+sidecar:
+  port: 5678
+
+---
+spring:
+  profiles:
+    active: local
+
+server:
+  port: 9011
+sidecar:
+  port: 5679

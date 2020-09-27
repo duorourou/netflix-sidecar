@@ -9,6 +9,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.Duration;
+import java.util.concurrent.atomic.AtomicLong;
 
 import static reactor.core.publisher.Flux.error;
 
@@ -20,6 +21,7 @@ public class VideoEndPoint {
     @GetMapping
     public Flux<VideoResponse> list(@RequestParam("duration") Long duration) {
         logger.info("received a list request");
+        final AtomicLong atomicLong = new AtomicLong(1);
         if (duration / 25 % 2 == 0) {
             logger.info("sliding error window {}", duration);
             return error(InvalidDurationException.raise(duration));
@@ -29,7 +31,7 @@ public class VideoEndPoint {
                 new VideoResponse("梅西经典进球", "煤老板"),
                 new VideoResponse("C罗十大远射破门", "可以吸的罗纳尔多"),
                 new VideoResponse("李毅大帝经典护球", "直播8")
-        }).delayElements(Duration.ofMillis(duration / 20));
+        }).delayElements(Duration.ofMillis( atomicLong.getAndIncrement() * 500));
     }
 
     @ExceptionHandler
